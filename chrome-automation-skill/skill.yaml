@@ -1,0 +1,90 @@
+name: chrome-automation
+version: 2.0.0
+description: |
+  使用 ChromeDriver 控制谷歌浏览器进行自动化操作
+  功能包括：网页导航、元素提取、模拟登录、会话保持、截图等
+
+author: AI Assistant
+tags:
+  - browser
+  - automation
+  - web-scraping
+  - login
+  - selenium
+
+dependencies:
+  - selenium>=4.15.0
+  - webdriver-manager>=4.0.0
+  - pillow>=10.0.0
+
+environment:
+  python: ">=3.8"
+
+inputs:
+  - name: action
+    type: string
+    required: true
+    description: 执行的操作类型 (navigate/extract/login/search/screenshot)
+  
+  - name: url
+    type: string
+    required: false
+    description: 目标网页 URL
+  
+  - name: selectors
+    type: object
+    required: false
+    description: 元素选择器配置
+  
+  - name: credentials
+    type: object
+    required: false
+    description: 登录凭据
+  
+  - name: headless
+    type: boolean
+    default: false
+    description: 是否使用无头模式
+
+outputs:
+  - name: data
+    type: object
+    description: 提取的数据
+  
+  - name: screenshot
+    type: string
+    description: 截图文件路径
+  
+  - name: success
+    type: boolean
+    description: 操作是否成功
+  
+  - name: message
+    type: string
+    description: 操作结果消息
+
+examples:
+  - name: 提取网页标题
+    input:
+      action: extract
+      url: "https://example.com"
+      selectors:
+        title: "h1"
+  
+  - name: 模拟登录
+    input:
+      action: login
+      url: "https://example.com/login"
+      credentials:
+        username: "user@example.com"
+        password: "password123"
+      selectors:
+        username: "#email"
+        password: "#pass"
+        submit: "button[type='submit']"
+  
+  - name: 搜索内容
+    input:
+      action: search
+      engine: "google"
+      query: "Python automation"
